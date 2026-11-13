@@ -1,0 +1,34 @@
+file_path: './data/mini_project_2_data.csv'
+target_column: no_show
+val_test_size: 0.2
+val_size: 0.5
+cv: 5
+scoring: f1
+hyperparameter_tuning:
+  logistic_regression:
+    classifier__C: [0.01, 0.1, 1, 10]
+    classifier__solver: ['liblinear']
+    classifier__max_iter: [1000]
+  knn:
+    classifier__n_neighbors: [5, 15, 31]
+    classifier__weights: ['uniform', 'distance']
+    classifier__metric: ['euclidean', 'manhattan']
+  decision_tree:
+    classifier__criterion: ['gini', 'entropy']
+    classifier__max_depth: [4, 6, 8, null]
+    classifier__min_samples_leaf: [1, 10]
+numerical_features:
+  - price_sgd
+  - num_adults
+  - num_children
+  - arrival_day
+  - stay_length
+  - booking_lead_months
+  - booking_month_num
+  - arrival_month_num
+nominal_features:
+  - branch
+  - country
+  - first_time
+  - room
+  - platform
