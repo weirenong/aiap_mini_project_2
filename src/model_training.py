@@ -214,7 +214,16 @@ class ModelTraining:
         --------
         Dict[str, float]: A dictionary containing the evaluation metrics.
         """
-        metrics = self._evaluate_model(model, X_test, y_test, model_name)
+        y_test_pred = model.predict(X_test)
+        y_test_pred_proba = model.predict_proba(X_test)[:, 1]
+
+        metrics = {
+            "Accuracy": accuracy_score(y_test, y_test_pred),
+            "Precision": precision_score(y_test, y_test_pred, zero_division=0),
+            "Recall": recall_score(y_test, y_test_pred, zero_division=0),
+            "F1 Score": f1_score(y_test, y_test_pred, zero_division=0),
+            "ROC AUC": roc_auc_score(y_test, y_test_pred_proba),
+        }
         logging.info(f"Final Test Metrics for {model_name}:")
         for metric_name, metric_value in metrics.items():
             logging.info(f"{metric_name}: {metric_value}")
